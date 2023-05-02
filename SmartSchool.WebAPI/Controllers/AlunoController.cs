@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using SmartSchool.WebAPI.Data;
 
 namespace SmartSchool.WebAPI.Controllers
 {
@@ -10,36 +11,24 @@ namespace SmartSchool.WebAPI.Controllers
     [Route("api/[controller]")]
     public class AlunoController : ControllerBase
     {
-        List<Aluno> Alunos = new List<Aluno>() {
-             new Aluno(){
-                Id = 1,
-                Nome = "Lucas",
-                Sobrenome = "Ferreira Guedes",
-                Telefone = "31 97527-5120"
-             },
-             new Aluno(){
-                Id = 2,
-                Nome = "Thais",
-                Sobrenome = "Alves Silva",
-                Telefone = "5446546"
-             }
+       
+        private readonly SmartContext _context;
 
-        };
-        public AlunoController()
+        public AlunoController( SmartContext context)
         {
-            
+            _context = context;
         }
 
         [HttpGet]
         public IActionResult Get()
         {
-             return Ok(Alunos);
+             return Ok(_context.Alunos);
         }
 
         [HttpGet("ById")]
         public IActionResult GetId(int id)
         {
-            var alunoId = Alunos.Find(a => a.Id == id);
+            var alunoId = _context.Alunos.FirstOrDefault(a => a.Id == id);
 
             if(alunoId == null)
                 return BadRequest("Este aluno com este ID, não existe");
@@ -49,7 +38,7 @@ namespace SmartSchool.WebAPI.Controllers
         [HttpGet("ByName")]
         public IActionResult Getbyname(string name, string sobrenome)
         {
-            var alunoId = Alunos.Find(a => a.Nome.Contains(name) && a.Sobrenome.Contains(sobrenome));
+            var alunoId = _context.Alunos.FirstOrDefault(a => a.Nome.Contains(name) && a.Sobrenome.Contains(sobrenome));
 
             if(alunoId == null)
                 return BadRequest("Este aluno com este nome e sobrenome não existe");
