@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using SmartSchool.WebAPI.Data;
 
 namespace SmartSchool.WebAPI.Controllers
@@ -14,7 +15,7 @@ namespace SmartSchool.WebAPI.Controllers
        
         private readonly SmartContext _context;
 
-        public AlunoController( SmartContext context)
+        public AlunoController(SmartContext context)
         {
             _context = context;
         }
@@ -48,12 +49,21 @@ namespace SmartSchool.WebAPI.Controllers
         [HttpPost]
         public IActionResult Post(Aluno aluno)
         {
+            _context.Add(aluno);
+            _context.SaveChanges();
              return Ok(aluno);      
         }
 
         [HttpPut("{id}")]
         public IActionResult Put(int id, Aluno aluno)
         {
+            var student = _context.Alunos.AsNoTracking().FirstOrDefault(a => a.Id == id);
+
+            if(student == null){
+                return BadRequest("Não existe nenhum aluno com este ID");
+            }
+            _context.Update(aluno);
+            _context.SaveChanges();
             return Ok(aluno);
         }
 
@@ -66,6 +76,14 @@ namespace SmartSchool.WebAPI.Controllers
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
+            var student = _context.Alunos.AsNoTracking().FirstOrDefault(context => context.Id == id);
+
+            if(student == null){
+                return BadRequest("Este Aluno com este ID não existe");
+            }
+            
+            _context.Remove(student);
+            _context.SaveChanges();
             return Ok();
         }
 

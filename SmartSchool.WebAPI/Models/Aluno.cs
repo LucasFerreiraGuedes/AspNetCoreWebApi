@@ -16,6 +16,10 @@ public class Aluno
 
 	public IEnumerable<AlunoDisciplina> AlunosDisciplinas { get; set; }
 
+	public Aluno()
+	{
+
+	}
 	public Aluno(int Id, string Nome, string Sobrenome,string Telefone) 
 	{
 		this.Id = Id;
@@ -23,8 +27,5 @@ public class Aluno
 		this.Sobrenome = Sobrenome;
 		this.Telefone = Telefone;
 	}
-    public Aluno()
-	{
-		
-	}
+    
 }
