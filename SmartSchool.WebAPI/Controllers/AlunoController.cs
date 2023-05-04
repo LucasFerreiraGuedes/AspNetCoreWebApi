@@ -70,6 +70,15 @@ namespace SmartSchool.WebAPI.Controllers
          [HttpPatch("{id}")]
         public IActionResult Patch(int id, Aluno aluno)
         {
+            
+            var student = _context.Alunos.AsNoTracking().FirstOrDefault(context => context.Id == id);
+
+            if(student == null){
+                return BadRequest("Este aluno com este ID não existe");
+            }
+            
+            _context.Update(aluno);
+            _context.SaveChanges();
             return Ok(aluno);
         }
 
