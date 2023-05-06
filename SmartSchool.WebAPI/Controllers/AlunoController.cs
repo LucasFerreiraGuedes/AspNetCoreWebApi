@@ -14,10 +14,12 @@ namespace SmartSchool.WebAPI.Controllers
     {
        
         private readonly SmartContext _context;
+        private readonly IRepository _repo;
 
-        public AlunoController(SmartContext context)
+        public AlunoController(SmartContext context, IRepository repo)
         {
             _context = context;
+            _repo = repo;
         }
 
         [HttpGet]
@@ -26,7 +28,7 @@ namespace SmartSchool.WebAPI.Controllers
              return Ok(_context.Alunos);
         }
 
-        [HttpGet("ById")]
+        [HttpGet("ById/{id}")]
         public IActionResult GetId(int id)
         {
             var alunoId = _context.Alunos.FirstOrDefault(a => a.Id == id);
@@ -49,8 +51,8 @@ namespace SmartSchool.WebAPI.Controllers
         [HttpPost]
         public IActionResult Post(Aluno aluno)
         {
-            _context.Add(aluno);
-            _context.SaveChanges();
+            _repo.Add(aluno);
+            _repo.SaveChanges();
              return Ok(aluno);      
         }
 
@@ -62,8 +64,8 @@ namespace SmartSchool.WebAPI.Controllers
             if(student == null){
                 return BadRequest("Não existe nenhum aluno com este ID");
             }
-            _context.Update(aluno);
-            _context.SaveChanges();
+            _repo.Update(aluno);
+            _repo.SaveChanges();
             return Ok(aluno);
         }
 
@@ -77,8 +79,8 @@ namespace SmartSchool.WebAPI.Controllers
                 return BadRequest("Este aluno com este ID não existe");
             }
             
-            _context.Update(aluno);
-            _context.SaveChanges();
+            _repo.Update(aluno);
+            _repo.SaveChanges();
             return Ok(aluno);
         }
 
@@ -91,8 +93,8 @@ namespace SmartSchool.WebAPI.Controllers
                 return BadRequest("Este Aluno com este ID não existe");
             }
             
-            _context.Remove(student);
-            _context.SaveChanges();
+            _repo.Delete(student);
+            _repo.SaveChanges();
             return Ok();
         }
 
