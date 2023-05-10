@@ -12,41 +12,39 @@ namespace SmartSchool.WebAPI.Controllers
     [Route("api/[controller]")]
     public class AlunoController : ControllerBase
     {
-       
-        private readonly SmartContext _context;
+      
         private readonly IRepository _repo;
 
-        public AlunoController(SmartContext context, IRepository repo)
+        public AlunoController(IRepository repo)
         {
-            _context = context;
             _repo = repo;
         }
 
         [HttpGet]
         public IActionResult Get()
         {
-             return Ok(_context.Alunos);
+             return Ok(_repo.GetAllAlunos());
         }
 
         [HttpGet("ById/{id}")]
         public IActionResult GetId(int id)
         {
-            var alunoId = _context.Alunos.FirstOrDefault(a => a.Id == id);
+            var alunoId = _repo.GetAlunoID(id);
 
             if(alunoId == null)
                 return BadRequest("Este aluno com este ID, não existe");
              return Ok(alunoId);
         }
 
-        [HttpGet("ByName")]
-        public IActionResult Getbyname(string name, string sobrenome)
-        {
-            var alunoId = _context.Alunos.FirstOrDefault(a => a.Nome.Contains(name) && a.Sobrenome.Contains(sobrenome));
+        //[HttpGet("ByName")]
+        //public IActionResult Getbyname(string name, string sobrenome)
+        //{
+        //    var alunoId = _context.Alunos.FirstOrDefault(a => a.Nome.Contains(name) && a.Sobrenome.Contains(sobrenome));
 
-            if(alunoId == null)
-                return BadRequest("Este aluno com este nome e sobrenome não existe");
-             return Ok(alunoId);
-        }
+        //    if(alunoId == null)
+        //        return BadRequest("Este aluno com este nome e sobrenome não existe");
+        //     return Ok(alunoId);
+        //}
 
         [HttpPost]
         public IActionResult Post(Aluno aluno)
@@ -59,7 +57,7 @@ namespace SmartSchool.WebAPI.Controllers
         [HttpPut("{id}")]
         public IActionResult Put(int id, Aluno aluno)
         {
-            var student = _context.Alunos.AsNoTracking().FirstOrDefault(a => a.Id == id);
+            var student = _repo.GetAlunoID(id);
 
             if(student == null){
                 return BadRequest("Não existe nenhum aluno com este ID");
@@ -72,8 +70,8 @@ namespace SmartSchool.WebAPI.Controllers
          [HttpPatch("{id}")]
         public IActionResult Patch(int id, Aluno aluno)
         {
-            
-            var student = _context.Alunos.AsNoTracking().FirstOrDefault(context => context.Id == id);
+
+            var student = _repo.GetAlunoID(id);
 
             if(student == null){
                 return BadRequest("Este aluno com este ID não existe");
@@ -87,7 +85,7 @@ namespace SmartSchool.WebAPI.Controllers
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            var student = _context.Alunos.AsNoTracking().FirstOrDefault(context => context.Id == id);
+            var student = _repo.GetAlunoID(id);
 
             if(student == null){
                 return BadRequest("Este Aluno com este ID não existe");

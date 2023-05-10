@@ -13,23 +13,24 @@ namespace SmartSchool.WebAPI.Controllers
     [Route("api/[controller]")]
     public class ProfessorController : ControllerBase
     {
-        private readonly SmartContext _context;
 
-        public ProfessorController(SmartContext context)
+        private readonly IRepository _repo;
+
+        public ProfessorController(IRepository repo)
         {
-            _context = context;
+            _repo = repo;
         }
 
         [HttpGet]
         public IActionResult Get()
         {
-            return Ok(_context.Professores);
+            return Ok(_repo.GetAllProfessores());
         }
 
-        [HttpGet("ById")]
+        [HttpGet("ById/{id}")]
         public IActionResult GetById(int id)
         {
-           var teacher = _context.Professores.FirstOrDefault(context => context.Id == id);
+           var teacher = _repo.GetProfessorID(id);
            
            if(teacher == null){
             return BadRequest("Não existe professor com este ID");
@@ -38,13 +39,14 @@ namespace SmartSchool.WebAPI.Controllers
 
         }
 
-        [HttpGet ("ByName")]
+        [HttpGet ("ByName/{nome}")]
 
         public IActionResult GetByName(string nome) 
         {
-            var teacher = _context.Professores.FirstOrDefault(context => context.Nome == nome);
+            var teacher = _repo.GetProfessorByName(nome);
 
-            if(teacher == null) 
+
+			if (teacher == null) 
             {
                 return BadRequest("Não existe professor com este nome");
             }
@@ -56,22 +58,22 @@ namespace SmartSchool.WebAPI.Controllers
         [HttpPost]
         public IActionResult Post(Professor professor) 
         {
-            _context.Add(professor);
-            _context.SaveChanges();
+            _repo.Add(professor);
+            _repo.SaveChanges();
             return Ok(professor);
         }
 
         [HttpPut("{id}")]
         public IActionResult Put(int id,Professor professor)
         {
-            var teacher = _context.Professores.AsNoTracking().FirstOrDefault(context => context.Id == id);
+            var teacher = _repo.GetProfessorID(id);
 
-            if(teacher == null)
+			if (teacher == null)
             {
                 return BadRequest("Não existe professor com este ID");
             }
-            _context.Update(professor);
-            _context.SaveChanges();
+            _repo.Update(professor);
+            _repo.SaveChanges();
             return Ok(professor);
 
         }
@@ -79,14 +81,14 @@ namespace SmartSchool.WebAPI.Controllers
 
         public IActionResult Patch(int id, Professor professor)
         {
-			var teacher = _context.Professores.AsNoTracking().FirstOrDefault(context => context.Id == id);
+			var teacher = _repo.GetProfessorID(id);
 
 			if (teacher == null)
 			{
 				return BadRequest("Não existe professor com este ID");
 			}
-			_context.Update(professor);
-			_context.SaveChanges();
+			_repo.Update(professor);
+			_repo.SaveChanges();
 			return Ok(professor);
 		}
 
@@ -94,15 +96,15 @@ namespace SmartSchool.WebAPI.Controllers
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            var teacher = _context.Professores.AsNoTracking().FirstOrDefault(context => context.Id ==id);
+            var teacher = _repo.GetProfessorID(id);
 
-            if(teacher == null)
+			if (teacher == null)
             {
                 return BadRequest("Não Existe professor com este ID");
             }
 
-            _context.Remove(teacher);
-            _context.SaveChanges();
+            _repo.Delete(teacher);
+            _repo.SaveChanges();
             return Ok();
 
         }
