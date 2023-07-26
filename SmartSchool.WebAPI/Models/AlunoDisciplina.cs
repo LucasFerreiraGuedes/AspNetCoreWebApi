@@ -6,6 +6,9 @@ using System.CodeDom;
 /// </summary>
 public class AlunoDisciplina
 {
+    public DateTime DataIni { get; set; } = DateTime.Now;
+    public DateTime? DataFim { get; set; }
+    public int? Nota { get; set; }
     public int AlunoId { get; set; }
 
     public Aluno Aluno { get; set; }

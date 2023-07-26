@@ -23,7 +23,7 @@ namespace SmartSchool.WebAPI.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-             return Ok(_repo.GetAllAlunos());
+             return Ok(_repo.GetAllAlunos(true));
         }
 
         [HttpGet("ById/{id}")]
