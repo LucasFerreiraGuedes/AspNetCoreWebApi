@@ -12,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using SmartSchool.WebAPI.Data;
+using AutoMapper;
 
 namespace SmartSchool.WebAPI
 {
@@ -36,6 +37,8 @@ namespace SmartSchool.WebAPI
             services.AddControllers()
                 .AddNewtonsoftJson(op => op.SerializerSettings.ReferenceLoopHandling =
                                    Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             
         }

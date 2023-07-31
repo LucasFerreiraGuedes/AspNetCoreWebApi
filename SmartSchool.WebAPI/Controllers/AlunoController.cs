@@ -6,6 +6,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SmartSchool.WebAPI.Data;
+using SmartSchool.WebAPI.DTOs;
 
 namespace SmartSchool.WebAPI.Controllers
 {
@@ -34,44 +35,39 @@ namespace SmartSchool.WebAPI.Controllers
         {
             var alunoId = _repo.GetAlunoID(id);
 
-            if(alunoId == null)
+            var result = _mapper.Map<AlunoDTO>(alunoId);
+
+            if(result == null)
                 return BadRequest("Este aluno com este ID, não existe");
-             return Ok(alunoId);
+             return Ok(result);
         }
 
-        //[HttpGet("ByName")]
-        //public IActionResult Getbyname(string name, string sobrenome)
-        //{
-        //    var alunoId = _context.Alunos.FirstOrDefault(a => a.Nome.Contains(name) && a.Sobrenome.Contains(sobrenome));
-
-        //    if(alunoId == null)
-        //        return BadRequest("Este aluno com este nome e sobrenome não existe");
-        //     return Ok(alunoId);
-        //}
 
         [HttpPost]
-        public IActionResult Post(Aluno aluno)
+        public IActionResult Post(AlunoRegisterDTO alunoDTO)
         {
+            var aluno = _mapper.Map<Aluno>(alunoDTO);
             _repo.Add(aluno);
             _repo.SaveChanges();
-             return Ok(aluno);      
+             return Ok(alunoDTO);      
         }
 
         [HttpPut("{id}")]
-        public IActionResult Put(int id, Aluno aluno)
+        public IActionResult Put(int id, AlunoRegisterDTO alunoDTO)
         {
             var student = _repo.GetAlunoID(id);
 
             if(student == null){
                 return BadRequest("Não existe nenhum aluno com este ID");
             }
+            var aluno = _mapper.Map<Aluno>(alunoDTO);
             _repo.Update(aluno);
             _repo.SaveChanges();
             return Ok(aluno);
         }
 
          [HttpPatch("{id}")]
-        public IActionResult Patch(int id, Aluno aluno)
+        public IActionResult Patch(int id, AlunoRegisterDTO alunoDTO)
         {
 
             var student = _repo.GetAlunoID(id);
@@ -79,8 +75,9 @@ namespace SmartSchool.WebAPI.Controllers
             if(student == null){
                 return BadRequest("Este aluno com este ID não existe");
             }
-            
-            _repo.Update(aluno);
+
+			var aluno = _mapper.Map<Aluno>(alunoDTO);
+			_repo.Update(aluno);
             _repo.SaveChanges();
             return Ok(aluno);
         }
@@ -96,7 +93,7 @@ namespace SmartSchool.WebAPI.Controllers
             
             _repo.Delete(student);
             _repo.SaveChanges();
-            return Ok();
+            return Ok("Aluno deletado com sucesso");
         }
 
 
