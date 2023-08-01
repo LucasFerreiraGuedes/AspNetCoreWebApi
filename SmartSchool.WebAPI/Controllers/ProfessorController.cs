@@ -2,9 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SmartSchool.WebAPI.Data;
+using SmartSchool.WebAPI.DTOs;
 
 namespace SmartSchool.WebAPI.Controllers
 {
@@ -15,10 +17,12 @@ namespace SmartSchool.WebAPI.Controllers
     {
 
         private readonly IRepository _repo;
+        private readonly IMapper _mapper;
 
-        public ProfessorController(IRepository repo)
+        public ProfessorController(IRepository repo, IMapper mapper)
         {
             _repo = repo;
+            _mapper = mapper;
         }
 
         [HttpGet]
@@ -30,7 +34,7 @@ namespace SmartSchool.WebAPI.Controllers
         [HttpGet("ById/{id}")]
         public IActionResult GetById(int id)
         {
-           var teacher = _repo.GetProfessorID(id);
+           var teacher = _mapper.Map<ProfessorDTO>(_repo.GetProfessorID(id));
            
            if(teacher == null){
             return BadRequest("Não existe professor com este ID");
@@ -43,7 +47,7 @@ namespace SmartSchool.WebAPI.Controllers
 
         public IActionResult GetByName(string nome) 
         {
-            var teacher = _repo.GetProfessorByName(nome);
+            var teacher = _mapper.Map<ProfessorDTO>(_repo.GetProfessorByName(nome));
 
 
 			if (teacher == null) 
@@ -56,15 +60,16 @@ namespace SmartSchool.WebAPI.Controllers
         }
 
         [HttpPost]
-        public IActionResult Post(Professor professor) 
+        public IActionResult Post(ProfessorRegisterDTO professorDTO) 
         {
+            var professor = _mapper.Map<Professor>(professorDTO);
             _repo.Add(professor);
             _repo.SaveChanges();
             return Ok(professor);
         }
 
         [HttpPut("{id}")]
-        public IActionResult Put(int id,Professor professor)
+        public IActionResult Put(int id,ProfessorRegisterDTO professorDTO)
         {
             var teacher = _repo.GetProfessorID(id);
 
@@ -72,14 +77,15 @@ namespace SmartSchool.WebAPI.Controllers
             {
                 return BadRequest("Não existe professor com este ID");
             }
-            _repo.Update(professor);
+			var professor = _mapper.Map<Professor>(professorDTO);
+			_repo.Update(professor);
             _repo.SaveChanges();
             return Ok(professor);
 
         }
         [HttpPatch("{id}")]
 
-        public IActionResult Patch(int id, Professor professor)
+        public IActionResult Patch(int id, ProfessorRegisterDTO professorDTO)
         {
 			var teacher = _repo.GetProfessorID(id);
 
@@ -87,6 +93,7 @@ namespace SmartSchool.WebAPI.Controllers
 			{
 				return BadRequest("Não existe professor com este ID");
 			}
+			var professor = _mapper.Map<Professor>(professorDTO);
 			_repo.Update(professor);
 			_repo.SaveChanges();
 			return Ok(professor);
@@ -105,7 +112,7 @@ namespace SmartSchool.WebAPI.Controllers
 
             _repo.Delete(teacher);
             _repo.SaveChanges();
-            return Ok();
+            return Ok("Professor apagado com sucesso");
 
         }
 
