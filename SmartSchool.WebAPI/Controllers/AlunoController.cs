@@ -10,8 +10,12 @@ using SmartSchool.WebAPI.DTOs;
 
 namespace SmartSchool.WebAPI.Controllers
 {
+    /// <summary>
+    /// 
+    /// </summary>
     [ApiController]
-    [Route("api/[controller]")]
+    [ApiVersion("1.0")]
+    [Route("api/v{version:apiVersion}/[controller]")]
     public class AlunoController : ControllerBase
     {
       
@@ -24,12 +28,22 @@ namespace SmartSchool.WebAPI.Controllers
             _mapper = mapper;
         }
 
+
+        /// <summary>
+        /// Método responsável por retornar todos os meus alunos
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public IActionResult Get()
         {
              return Ok(_repo.GetAllAlunos(true));
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet("ById/{id}")]
         public IActionResult GetId(int id)
         {
@@ -49,7 +63,9 @@ namespace SmartSchool.WebAPI.Controllers
             var aluno = _mapper.Map<Aluno>(alunoDTO);
             _repo.Add(aluno);
             _repo.SaveChanges();
-             return Ok(alunoDTO);      
+
+            var student = _mapper.Map<AlunoDTO>(aluno);
+             return Ok(student);      
         }
 
         [HttpPut("{id}")]

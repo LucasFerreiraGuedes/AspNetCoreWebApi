@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>SmartSchool.WebAPI</name>
+    </assembly>
+    <members>
+        <member name="T:SmartSchool.WebAPI.Controllers.AlunoController">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:SmartSchool.WebAPI.Controllers.AlunoController.Get">
+            <summary>
+            Método responsável por retornar todos os meus alunos
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:SmartSchool.WebAPI.Controllers.AlunoController.GetId(System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="T:SmartSchool.WebAPI.Migrations.CriandoBanco">
+            <inheritdoc />
+        </member>
+        <member name="M:SmartSchool.WebAPI.Migrations.CriandoBanco.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:SmartSchool.WebAPI.Migrations.CriandoBanco.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:SmartSchool.WebAPI.Migrations.CriandoBanco.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:Aluno">
+            <summary>
+            Summary description for Class1
+            </summary>
+        </member>
+        <member name="T:AlunoCurso">
+            <summary>
+            Summary description for Class1
+            </summary>
+        </member>
+        <member name="T:AlunoDisciplina">
+            <summary>
+            Summary description for Class1
+            </summary>
+        </member>
+        <member name="T:Disciplina">
+            <summary>
+            Summary description for Class1
+            </summary>
+        </member>
+        <member name="T:Professor">
+            <summary>
+            Summary description for Class1
+            </summary>
+        </member>
+    </members>
+</doc>
