@@ -22,16 +22,16 @@
             <param name="id"></param>
             <returns></returns>
         </member>
-        <member name="T:SmartSchool.WebAPI.Migrations.CriandoBanco">
+        <member name="T:SmartSchool.WebAPI.Migrations.SqlServerInit">
             <inheritdoc />
         </member>
-        <member name="M:SmartSchool.WebAPI.Migrations.CriandoBanco.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+        <member name="M:SmartSchool.WebAPI.Migrations.SqlServerInit.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
             <inheritdoc />
         </member>
-        <member name="M:SmartSchool.WebAPI.Migrations.CriandoBanco.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+        <member name="M:SmartSchool.WebAPI.Migrations.SqlServerInit.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
             <inheritdoc />
         </member>
-        <member name="M:SmartSchool.WebAPI.Migrations.CriandoBanco.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+        <member name="M:SmartSchool.WebAPI.Migrations.SqlServerInit.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
             <inheritdoc />
         </member>
         <member name="T:Aluno">

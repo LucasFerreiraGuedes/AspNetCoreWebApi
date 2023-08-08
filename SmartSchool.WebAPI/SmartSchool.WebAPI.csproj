@@ -4,14 +4,7 @@
     <TargetFramework>net7.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-  </PropertyGroup>
-
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)' =='Debug|AnyCPU'">
 		<DocumentationFile>SmartSchool.WebAPI.xml</DocumentationFile>
-		<NoWarn>1701;1702;1591</NoWarn>
-	</PropertyGroup>
-
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
 	  <NoWarn>1701;1702;1591</NoWarn>
 	</PropertyGroup>
 
@@ -26,12 +19,14 @@
 	    <PrivateAssets>all</PrivateAssets>
 	    <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 	  </PackageReference>
+	  <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.0" />
 	  <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.5">
 	    <PrivateAssets>all</PrivateAssets>
 	    <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 	  </PackageReference>
-	  <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="7.0.5" />
+	  <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="7.0.0" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="7.0.6" />
+    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="7.0.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
   </ItemGroup>
 
